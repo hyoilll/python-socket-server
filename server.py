@@ -1,5 +1,18 @@
 import socket
 
+
+# send function
+def send(sock):
+    sendMsg = input('>>> ')
+    sock.send(sendMsg.encode('utf-8'))
+
+
+# recv function
+def recv(sock):
+    recvMsg = sock.recv(1024).decode('utf-8')
+    print('client : ', recvMsg)
+
+
 # 소켓 생성 (Address Family, socket type)
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -34,14 +47,9 @@ print('Connected by : ', addr)
 # decode : client 쪽에서 incode하여 byte로 보냈기때문에 서버쪽에서도 byte를 문자열로 변환해줌
 
 while True:
-    recvMsg = connectionSocket.recv(1024).decode('utf-8')
-    print('client : ', recvMsg)
+    recv(connectionSocket)
 
-    if recvMsg == 'quit':
-        break
-
-    sendMsg = input('>>> ')
-    connectionSocket.send(sendMsg.encode('utf-8'))
+    send(connectionSocket)
 
 
 print('서버 종료')
