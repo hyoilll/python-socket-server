@@ -1,16 +1,20 @@
 import socket
+import threading
+import time
 
 
 # send function
 def send(sock):
-    sendMsg = input('>>> ')
-    sock.send(sendMsg.encode('utf-8'))
+    while True:
+        sendMsg = input('>>> ')
+        sock.send(sendMsg.encode('utf-8'))
 
 
 # recv function
 def recv(sock):
-    recvMsg = sock.recv(1024).decode('utf-8')
-    print('client : ', recvMsg)
+    while True:
+        recvMsg = sock.recv(1024).decode('utf-8')
+        print('client : ', recvMsg)
 
 
 # 소켓 생성 (Address Family, socket type)
@@ -46,10 +50,18 @@ print('Connected by : ', addr)
 # 1024 : 소켓에서 1024바이트만큼 가져오겠다 if 보내온 데이터가 1024바이트보다 많다면, 다시 recv(1024)를 실행할 때 다시한 번 가져온다
 # decode : client 쪽에서 incode하여 byte로 보냈기때문에 서버쪽에서도 byte를 문자열로 변환해줌
 
-while True:
-    recv(connectionSocket)
+# threading.Thread : thread 생성
+# target : thread가 수행할 함수
+# args : target함수에 넘길 인자
+sender = threading.Thread(target=send, args=(connectionSocket,))
+sender.start()
 
-    send(connectionSocket)
+receiver = threading.Thread(target=recv, args=(connectionSocket,))
+receiver.start()
+
+
+while True:
+    time.sleep(1)
 
 
 print('서버 종료')
