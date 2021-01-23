@@ -22,10 +22,29 @@ while True:
     menu = int(connectionSock.recv(1024).decode('utf-8'))
 
     if menu == 1:  # 1 클라이언트 -> 서버 업로드
-        pass
+        # 현재 디렉터리 path
+        nowdir = os.getcwd()
+
+        fileName = connectionSock.recv(1024).decode('utf-8')  # 파일의 이름 받아옴
+        data = connectionSock.recv(1024)  # 파일의 데이터 받아옴
+        data_transferred = 0
+
+        with open(nowdir + '\\' + fileName, 'wb') as f:
+            try:
+                while data:
+                    f.write(data)
+                    data_transferred += len(data)
+
+                    if len(data) < 1024:
+                        break
+
+                    data = connectionSock.recv(1024)
+            except Exception as ex:
+                print(ex)
+
+        print('수신완료 %s, 전송량 %d' % (fileName, data_transferred))
     elif menu == 2:  # 2 서버 -> 클라이언트 다운로드
         # 클라이언트에게 파일이름 (바이트형식) 으로 전달받음
-        print('2')
         fileName = connectionSock.recv(1024)
         print('받은 데이터 : ', fileName.decode('utf-8'))
 
@@ -41,10 +60,8 @@ while True:
             try:
                 data = f.read(1024)  # 1024바이트 읽음
                 while data:  # data가 없을 때 까지
-                    data_transferred += connectionSock.send(
-                        data)
+                    data_transferred += connectionSock.send(data)
                     data = f.read(1024)
-                    print(len(data))
             except Exception as ex:
                 print(ex)
 
