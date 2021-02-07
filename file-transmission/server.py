@@ -14,11 +14,11 @@ serverSock.listen(1)
 
 connectionSock, addr = serverSock.accept()
 
-print(str(addr), ' 에서 접속하였습니다.')
+print(str(addr), ' から接続しました。')
 
 while True:
     # menu 전달받음
-    print('menu 수신 대기중')
+    print('menu 受信 待機中')
     menu = int(connectionSock.recv(1024).decode('utf-8'))
 
     if menu == 1:  # 1 클라이언트 -> 서버 업로드
@@ -42,11 +42,11 @@ while True:
             except Exception as ex:
                 print(ex)
 
-        print('수신완료 %s, 전송량 %d' % (fileName, data_transferred))
+        print('受信かんりょ %s, 伝送量 %d' % (fileName, data_transferred))
     elif menu == 2:  # 2 서버 -> 클라이언트 다운로드
         # 클라이언트에게 파일이름 (바이트형식) 으로 전달받음
         fileName = connectionSock.recv(1024)
-        print('받은 데이터 : ', fileName.decode('utf-8'))
+        print('貰ったデータ : ', fileName.decode('utf-8'))
 
         data_transferred = 0
 
@@ -54,7 +54,7 @@ while True:
             print('no file')
             sys.exit()
 
-        print('파일 : %s / 전송 시작' % fileName)
+        print('ファイル : %s / 伝送スタット' % fileName)
 
         with open(fileName, 'rb') as f:
             try:
@@ -65,7 +65,7 @@ while True:
             except Exception as ex:
                 print(ex)
 
-        print('전송완료 %s, 전송량 %d' % (fileName, data_transferred))
+        print('伝送完了 %s, 伝送量 %d' % (fileName, data_transferred))
     else:  # 3 서버 파일 리스트 조회
         path_dir = 'C:\\Users\\dlgyd\\OneDrive\\문서\\GitHub\\python-socket-server\\file-transmission'
         file_list = os.listdir(path_dir)
