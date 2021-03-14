@@ -1,4 +1,4 @@
-# Python ソケット通信を利用したファイルを伝送するプログラム
+# Python ソケット通信を利用したファイルを伝送するプログラム（With　マルチスレッド）
 
 ---
 
@@ -23,7 +23,7 @@
 **機能**
 
 1. チェット
-   - Thread を利用してリアルタイムでクライアント側とサーバー側が通信することが可能
+   - Thread を利用してリアルタイムで多数のクライアント側とサーバー側が通信することが可能
 2. ファイル伝送
    - クライアント側からサーバー側までアップロード
    - サーバー側からクライアント側までダウンロード
@@ -33,16 +33,16 @@
 
 1. 接続
 
-![server-connect](https://user-images.githubusercontent.com/50327128/107147830-822c9180-6993-11eb-988d-464522e1aab4.JPG)
+![server接続](https://user-images.githubusercontent.com/50327128/111060760-b3dccf00-84e2-11eb-8605-b599c8ef2738.JPG)
 
 2. アップロード
 
-![server-upload](https://user-images.githubusercontent.com/50327128/107147832-848eeb80-6993-11eb-94c6-48201f37ee92.JPG)
+![serverアップロード](https://user-images.githubusercontent.com/50327128/111060773-c1925480-84e2-11eb-83c9-624bee0f65b0.JPG)
 
 3. サーバー側のファイルリストをチェック
 
-![server-filelistprint](https://user-images.githubusercontent.com/50327128/107147835-8658af00-6993-11eb-9caf-cfb2f344b5c4.JPG)
+![serverファイルリスト](https://user-images.githubusercontent.com/50327128/111060776-c48d4500-84e2-11eb-9628-f9562532ea61.JPG)
 
 4. ダウンロード
 
-![server-download](https://user-images.githubusercontent.com/50327128/107147836-8789dc00-6993-11eb-88e2-1b3f1e139a7a.JPG)
+![serverダウンロード](https://user-images.githubusercontent.com/50327128/111060779-c7883580-84e2-11eb-8f42-7248b7e35d20.JPG)
