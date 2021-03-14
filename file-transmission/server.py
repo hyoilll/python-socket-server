@@ -17,19 +17,19 @@ def handle_client(client_socket, addr):
     print('Connection : ', addr)
     group.append(client_socket)
     count += 1
-    print('접속중인 클라이언트 수: ', count)
+    print('Connected client count: ', count)
 
     while True:
-        print('menu 대기중 ...')
+        print('wating menu ...')
         menu = int(client_socket.recv(1024).decode('utf-8'))
 
         if menu == 1:  # client -> server data
-            print('%s로 부터 선택된 메뉴 : %d' % (addr, menu))
+            print('%sから選ばれたメニュー : %d' % (addr, menu))
             print('client -> server recive file')
-            # 현재 디렉터리 path
+            # 今のディレクトリーのパース
             nowdir = os.getcwd()
 
-            # filename & data 받아옴
+            # filename & data 貰う
             fileName = client_socket.recv(1024).decode('utf-8')
             data = client_socket.recv(1024)
             data_transferred = 0
@@ -48,15 +48,15 @@ def handle_client(client_socket, addr):
                 except Exception as ex:
                     print(ex)
 
-            print('파일명 %s, 수신량 %d : 수신완료' % (fileName, data_transferred))
+            print('ファイル名 %s, 受信料 %d : 受信完了' % (fileName, data_transferred))
 
         elif menu == 2:  # server -> client data
-            print('%s로 부터 선택된 메뉴 : %d' % (addr, menu))
+            print('%sから選ばれたメニュー : %d' % (addr, menu))
             print('server -> client send file')
 
-            # 클라이언트로부터 전달 할 파일 이름을 받음
+            # クライアントに伝送するファイル名を貰う
             fileName = client_socket.recv(1024).decode('utf-8')
-            print('받은 파일명 : ', fileName)
+            print('貰ったファイル名 : ', fileName)
 
             data_transferred = 0
 
@@ -65,7 +65,7 @@ def handle_client(client_socket, addr):
                 print(msg)
                 client_socket.send(msg.encode('utf-8'))
             else:
-                print('파일명 : %s / 전송시작 ' % fileName)
+                print('ファイル名 : %s / 伝送スタット ' % fileName)
 
                 with open(fileName, 'rb') as f:
                     try:
@@ -76,12 +76,12 @@ def handle_client(client_socket, addr):
                     except Exception as ex:
                         print(ex)
 
-                print('파일명 %s, 전송량 %d : 전송완료' % (fileName, data_transferred))
+                print('ファイル名 %s, 伝送量 %d : 伝送完了' % (fileName, data_transferred))
         elif menu == 3:  # server -> client fileList
-            print('%s로 부터 선택된 메뉴 : %d' % (addr, menu))
+            print('%sから選ばれたメニュー : %d' % (addr, menu))
             print('server -> client send fileList')
 
-            # 현재 디렉터리 path
+            # 今のディレクトリーのパース
             path_dir = os.getcwd()
             file_list = os.listdir(path_dir)
             file_list = ', '.join(file_list)
